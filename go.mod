@@ -6,6 +6,7 @@ require (
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/gin-gonic/gin v1.5.0
 	github.com/go-sql-driver/mysql v1.4.1
+	github.com/gomodule/redigo v2.0.1-0.20180627144507-2cd21d9966bf+incompatible
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jinzhu/gorm v1.9.12
 	github.com/lestrrat/go-envload v0.0.0-20180220120943-6ed08b54a570 // indirect
