@@ -1,30 +1,59 @@
-package server
+package visitor_persistence
 
 import (
-	"github.com/gin-gonic/gin"
-	_ "github.com/go-sql-driver/mysql"
+	"testing"
+	"time"
+
 	"github.com/gomodule/redigo/redis"
-	"github.com/spf13/viper"
-	"visitor/app/server/router"
-	"visitor/client/gorm_client"
 	"visitor/client/redis_client"
 )
 
-func Init() *gin.Engine {
-	var err error
-	// 连接数据库
-	_, err = gorm_client.Dial("mysql", viper.GetString("mysql.address"))
+func TestRedis_Add(t *testing.T) {
+	con := redis_client.GetMasterCon()
+	defer con.Close()
+	id := "testid"
+	con.Do("DEL", RedisVisitorKeyPre+id)
+	r := Redis{&con}
+	err := r.Add(id, 1)
 	if err != nil {
-		panic(err)
+		t.Error(err)
+		return
 	}
-
-	// 初始化表
-	err = gorm_client.Client.Master().Set("gorm:table_options", "ENGINE=InnoDB CHARSET=utf8mb4 auto_increment=1").
-		AutoMigrate().Error
+	err = r.Add(id, 2)
 	if err != nil {
-		panic(err)
+		t.Error(err)
+		return
 	}
+	err = r.Add(id, int64(time.Minute)+1)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	err = r.Add(id, int64(time.Minute*2)+1)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	reply, err := r.List(id, []int64{1, 2, 3}, int64(time.Minute)*3)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	if reply[1] != 1 {
+		t.Error(1)
+		return
+	}
+	if reply[2] != 2 {
+		t.Error(2)
+		return
+	}
+	if reply[3] != 4 {
+		t.Error(3)
+		return
+	}
+}
 
+func init() {
 	//初始化redis
 	redis_client.MasterPool = &redis.Pool{ //实例化一个连接池
 		MaxIdle: 16, //最初的连接数量
@@ -32,7 +61,7 @@ func Init() *gin.Engine {
 		MaxActive:   0,   //连接池最大连接数量,不确定可以用0（0表示自动定义），按需分配
 		IdleTimeout: 300, //连接关闭时间 300秒 （300秒不使用自动关闭）
 		Dial: func() (redis.Conn, error) { //要连接的redis数据库
-			return redis.Dial("tcp", viper.GetString("redis.master.address"))
+			return redis.Dial("tcp", "localhost:6379")
 		},
 	}
 
@@ -42,10 +71,7 @@ func Init() *gin.Engine {
 		MaxActive:   0,   //连接池最大连接数量,不确定可以用0（0表示自动定义），按需分配
 		IdleTimeout: 300, //连接关闭时间 300秒 （300秒不使用自动关闭）
 		Dial: func() (redis.Conn, error) { //要连接的redis数据库
-			return redis.Dial("tcp", viper.GetString("redis.master.address"))
+			return redis.Dial("tcp", "localhost:6379")
 		},
 	}
-	// 初始化路由
-	r := router.Init()
-	return r
 }
