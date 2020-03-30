@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package visitorpb;
+option go_package = "visitorpb";
+option (gogoproto.populate_all) = true;
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "visitor.proto";
+service visitor{
+    rpc AddVisitor (AddVisitorRequest) returns (AddVisitorReply);
+}

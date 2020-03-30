@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package visitorpb;
+option go_package = "visitorpb";
+option (gogoproto.populate_all) = true;
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+message AddVisitorRequest{
+    string id = 1;
+    int64 unixnano = 2;
+}
+
+message AddVisitorReply{
+    bool ok = 1;
+}

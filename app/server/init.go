@@ -24,7 +24,14 @@ func Init() *gin.Engine {
 	if err != nil {
 		panic(err)
 	}
+	redisInit()
+	// 初始化路由
+	r := router.Init()
+	startRpcServer()
+	return r
+}
 
+func redisInit() {
 	//初始化redis
 	redis_client.MasterPool = &redis.Pool{ //实例化一个连接池
 		MaxIdle: 16, //最初的连接数量
@@ -45,7 +52,4 @@ func Init() *gin.Engine {
 			return redis.Dial("tcp", viper.GetString("redis.master.address"))
 		},
 	}
-	// 初始化路由
-	r := router.Init()
-	return r
 }
