@@ -1,6 +1,0 @@
-server:
-  port: :7632
-
-log:
-  path: log/visitor.log
-  maxAge:
