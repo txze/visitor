@@ -2,10 +2,11 @@ package rpc
 
 import (
 	"context"
-	"google.golang.org/grpc"
 	"testing"
 	"time"
-	"visitor/visitorpb"
+
+	"github.com/txze/visitorpb/go"
+	"google.golang.org/grpc"
 )
 
 //该测试依赖服务启动 只用于个人测试使用 结果不能作为单元测试参照

@@ -19,6 +19,7 @@ require (
 	github.com/sirupsen/logrus v1.2.0
 	github.com/spf13/viper v1.6.2
 	github.com/tebeka/strftime v0.1.3 // indirect
+	github.com/txze/visitorpb v0.0.0-20200404065930-2e814885e9a8
 	golang.org/x/crypto v0.0.0-20191205180655-e7c4368fe9dd
 	golang.org/x/net v0.0.0-20200324143707-d3edc9973b7e
 	golang.org/x/sys v0.0.0-20200327173247-9dae0f8f5775 // indirect

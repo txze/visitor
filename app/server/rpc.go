@@ -1,12 +1,12 @@
 package server
 
 import (
+	"github.com/txze/visitorpb/go"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"log"
 	"net"
 	"visitor/service/rpc"
-	"visitor/visitorpb"
 )
 
 func startRpcServer() {
