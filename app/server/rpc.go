@@ -10,7 +10,7 @@ import (
 )
 
 func startRpcServer() {
-	listen, err := net.Listen("tcp", ":50051")
+	listen, err := net.Listen("tcp", ":9091")
 	if err != nil {
 		log.Fatal(err)
 	}

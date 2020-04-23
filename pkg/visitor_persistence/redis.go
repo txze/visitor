@@ -3,7 +3,6 @@ package visitor_persistence
 import (
 	"fmt"
 	"github.com/gomodule/redigo/redis"
-	"time"
 )
 
 const (
@@ -30,7 +29,7 @@ func (r *Redis) List(id string, span []int64, nano int64) (map[int64]int64, erro
 	//span里面的单位是分钟
 	var result = map[int64]int64{}
 	for _, item := range span {
-		min := nano - item*int64(time.Minute)
+		min := nano - item*60*1000
 		count, err := redis.Int64(r.Con.Do(ZCOUNT, RedisVisitorKeyPre+id, min, nano))
 		if err != nil {
 			return nil, err
