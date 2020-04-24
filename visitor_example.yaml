@@ -1,8 +1,10 @@
 server:
-  port: 7632
+  port: 9091
 
-mysql:
-  address: user:password@/dbname?charset=utf8&parseTime=True&loc=Local
+redis:
+  master:
+    address: local.pc:6379
+    password:
 
 log:
   path: log/visitor.log
