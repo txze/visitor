@@ -23,7 +23,7 @@ func main() {
 	log.Info("Server listening on ", port)
 
 	router := server.Init()
-	err := router.Run(port)
+	err := router.Run(":" + port)
 	if err != nil {
 		fmt.Println(err)
 		log.Info("Server Stop, Error: ", err)
