@@ -25,7 +25,7 @@ func Init() *gin.Engine {
 	redisInit()
 	// 初始化路由
 	r := router.Init()
-	startRpcServer()
+	go startRpcServer()
 	return r
 }
 
