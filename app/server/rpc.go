@@ -7,6 +7,8 @@ import (
 	"log"
 	"net"
 	"visitor/service/rpc"
+
+	"github.com/sirupsen/logrus"
 )
 
 func startRpcServer() {
@@ -18,6 +20,7 @@ func startRpcServer() {
 	visitorpb.RegisterVisitorServer(s, &rpc.Service{})
 	// Register reflection service on gRPC server.
 	reflection.Register(s)
+	logrus.Println("rpc start")
 	if err := s.Serve(listen); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
